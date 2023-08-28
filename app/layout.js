@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
 
   const router = useRouter();
   let pathname = usePathname();
-  let [sessionTemp, sessionAuth] = useState(true);
+  let [sessionTemp, sessionAuth] = useState(false);
   let [idVal, idValChk] = useState('');
   let [passVal, passValChk] = useState('');
 
@@ -57,6 +57,22 @@ export default function RootLayout({ children }) {
       alert('계정 정보를 다시 확인해주세요');
     }
   }
+
+  const handleMessage = () => {
+    if (idVal =='' || passVal =='') {
+      return alert('칸이 비었잖슴');
+    }
+    accChk();
+    // 메시지 전송하는 부분 구현
+    // setText(''); // 메시지 전송 후 input 빈값으로 수정
+    // inputRef?.current?.focus(); // 메시지 전송 후 input 포커스
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleMessage();
+    }
+  };
 
   return (
     <html lang="ko">
@@ -146,16 +162,30 @@ export default function RootLayout({ children }) {
               <div className="w-96">
                 <div className="bg-white shadow rounded p-10">
                   <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 text-gray-800 mb-5">
-                    Stemp Tour Admin
+                    Stamp Tour Admin
                   </p>
                   <div>
                     <lable className="text-sm font-medium leading-none text-gray-800">Accout</lable>
-                    <input onChange={(e)=>{ idValChk(e.target.value) }} aria-label="enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                    <input 
+                      onChange={(e)=>{ idValChk(e.target.value) }}
+                      onKeyPress={handleKeyPress}
+                      aria-label="enter email adress" 
+                      role="input" 
+                      type="email" 
+                      className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" 
+                    />
                   </div>
                   <div className="mt-6  w-full">
                     <lable className="text-sm font-medium leading-none text-gray-800">Password</lable>
                     <div className="relative flex items-center justify-center">
-                      <input onChange={(e)=>{ passValChk(e.target.value) }} aria-label="enter Password" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                      <input 
+                        onChange={(e)=>{ passValChk(e.target.value) }}
+                        onKeyPress={handleKeyPress}
+                        aria-label="enter Password" 
+                        role="input" 
+                        type="password" 
+                        className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" 
+                      />
                       <div className="absolute right-0 mt-2 mr-3 cursor-pointer">
                         <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path
